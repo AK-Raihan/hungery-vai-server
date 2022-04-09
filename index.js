@@ -74,9 +74,25 @@ async function run(){
       res.send(result);
     });
 
+    // add product post api
+    app.post("/addService", async (req, res) => {
+      const result = await foodCollection.insertOne(req.body);
+      res.send(result);
+    }); 
 
-
-
+    // update status
+  app.put('/updateStatus/:id', (req, res)=>{
+    const id = req.params.id;
+    const updateStatus = req.body.status;
+    const filter = {_id: ObjectId(id)};
+    console.log(updateStatus);
+    orderCollection.updateOne(filter, {
+      $set: {status: updateStatus},
+    })
+    .then(result=>{
+      res.send(result);
+    });
+  });
 
 
     }
